@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="processing.test.processing_usbtest4"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="26" />
+
+    <uses-feature android:name="android.hardware.usb.host" />
+
+    <application
+        android:debuggable="true"
+        android:icon="@drawable/icon"
+        android:label="processing_usbtest4"
+        android:testOnly="true" >
+        <activity
+            android:name="processing.test.processing_usbtest4.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.media.action.IMAGE_CAPTURE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter" />
+        </activity>
+
+        <meta-data
+            android:name="android.support.VERSION"
+            android:value="26.0.2" />
+
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="false" />
+    </application>
+
+</manifest>
