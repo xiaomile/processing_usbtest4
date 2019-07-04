@@ -1,7 +1,0 @@
-#Internal package file, do not edit.
-#Tue Apr 23 15:36:10 CST 2019
-0.baseType=DIRECTORY
-0.base=D\:\\github\\processing_usbtest4\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-0.path=classes.dex
-0.set=DEX
-count=1

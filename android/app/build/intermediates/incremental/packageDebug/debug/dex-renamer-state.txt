@@ -1,4 +1,0 @@
-#Tue Apr 23 15:36:09 CST 2019
-base.0=D\:\\github\\processing_usbtest4\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-path.0=classes.dex
-renamed.0=classes.dex
