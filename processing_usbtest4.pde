@@ -122,12 +122,12 @@ void draw() {
     "ry: " + nfp(rotationY, 1, 3) + "\n" +
     "rz: " + nfp(rotationZ, 1, 3), 0, 0, width, height);
   //s1=(byte)((int)(accelerometerX*10));
-  s1=((char)0xFE+"{\"accelermeter\":["+nfp(accelerometerX, 1, 3)+","+nfp(accelerometerY, 1, 3)+
+  s1=("!{\"accelermeter\":["+nfp(accelerometerX, 1, 3)+","+nfp(accelerometerY, 1, 3)+
   ","+nfp(accelerometerZ, 1, 3)+"],\"rotation\":["+nfp(rotationX, 1, 3)+
-  ","+nfp(rotationY, 1, 3)+","+nfp(rotationZ, 1, 3)+"]}"+(char)0xFE).getBytes();
+  ","+nfp(rotationY, 1, 3)+","+nfp(rotationZ, 1, 3)+"]}!").getBytes();
   s1[0] = (byte)0xFE; //the range of char in java is 0~127 not 0~255
   s1[s1.length-1] = (byte)0xFE; //so correct the first byte and the last byte
-  //text(read_recv+"!",320,1150);
+  text(toHexString(s1,s1.length)+"!",0,640);
   text("read String:",300,1150);
   String[] t2 = read_recv.split(" ");
   String t1 = "";
