@@ -130,6 +130,7 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
 byte[] val_read  =new byte[1]; 
 byte[] val_write =new byte[1];  
 String read_recv = "";
+String sendstr = "";
 KetaiSensor sensor;
 float accelerometerX, accelerometerY, accelerometerZ;
 float rotationX, rotationY, rotationZ;
@@ -165,10 +166,11 @@ public void draw() {
   //s1=(byte)((int)(accelerometerX*10));
   s1=("!{\"accelermeter\":["+nfp(accelerometerX, 1, 3)+","+nfp(accelerometerY, 1, 3)+
   ","+nfp(accelerometerZ, 1, 3)+"],\"rotation\":["+nfp(rotationX, 1, 3)+
-  ","+nfp(rotationY, 1, 3)+","+nfp(rotationZ, 1, 3)+"]}!").getBytes();
+  ","+nfp(rotationY, 1, 3)+","+nfp(rotationZ, 1, 3)+"]}!").replace("+","").getBytes();
   s1[0] = (byte)0xFE; //the range of char in java is 0~127 not 0~255
   s1[s1.length-1] = (byte)0xFE; //so correct the first byte and the last byte
-  text(toHexString(s1,s1.length)+"!",0,640);
+  sendstr = toHexString(s1,s1.length)+"!";
+  text(sendstr,0,640);
   text("read String:",300,1150);
   String[] t2 = read_recv.split(" ");
   String t1 = "";
@@ -176,8 +178,9 @@ public void draw() {
     if(t2[i].length()>=2)
   t1+=(char)(Integer.parseInt(t2[i],16));}
   text(t1+"?",320,1210);
+  saveStrings("/sdcard/test.txt",sendstr.split(""));
   new_time= millis();
-  if((new_time-old_time)>100){
+  if((new_time-old_time)>1000){
   if(s1!=old_s){
     val_write = s1;
     //bt.broadcast(val_write);
