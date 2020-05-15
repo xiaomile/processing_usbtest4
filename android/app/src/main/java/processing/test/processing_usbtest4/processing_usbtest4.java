@@ -127,8 +127,8 @@ e.printStackTrace();
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //bt.onActivityResult(requestCode, resultCode, data);
 }
-byte[] val_read  =new byte[1]; 
-byte[] val_write =new byte[1];  
+byte[] val_read  =new byte[4096];
+byte[] val_write =new byte[4096];
 String read_recv = "";
 String sendstr = "";
 KetaiSensor sensor;
@@ -164,21 +164,33 @@ public void draw() {
     "ry: " + nfp(rotationY, 1, 3) + "\n" +
     "rz: " + nfp(rotationZ, 1, 3), 0, 0, width, height);
   //s1=(byte)((int)(accelerometerX*10));
-  s1=("!{\"accelermeter\":["+nfp(accelerometerX, 1, 3)+","+nfp(accelerometerY, 1, 3)+
-  ","+nfp(accelerometerZ, 1, 3)+"],\"rotation\":["+nfp(rotationX, 1, 3)+
-  ","+nfp(rotationY, 1, 3)+","+nfp(rotationZ, 1, 3)+"]}!").replace("+","").getBytes();
-  s1[0] = (byte)0xFE; //the range of char in java is 0~127 not 0~255
-  s1[s1.length-1] = (byte)0xFE; //so correct the first byte and the last byte
-  sendstr = toHexString(s1,s1.length)+"!";
-  text(sendstr,0,640);
-  text("read String:",300,1150);
+  //s1=("!{\"accelermeter\":["+nfp(accelerometerX, 1, 3)+","+nfp(accelerometerY, 1, 3)+
+  //","+nfp(accelerometerZ, 1, 3)+"],\"rotation\":["+nfp(rotationX, 1, 3)+
+  //","+nfp(rotationY, 1, 3)+","+nfp(rotationZ, 1, 3)+"]}!").replace("+","").getBytes();
+  s1 = ("{\"a\":["+nfp(accelerometerX, 1, 3)+","+nfp(accelerometerY, 1, 3) +","+
+          nfp(accelerometerZ, 1, 3)+"]}").replace("+","").getBytes();
+  //s1[0] = (byte)0xFA; //the range of char in java is 0~127 not 0~255
+  //s1[s1.length-1] = (byte)0xFA; //so correct the first byte and the last byte
+  sendstr = toHexString(s1,s1.length);
+  textSize(20);
+  text(sendstr.substring(0),0,640);
+  text(new String(s1),0,800);
+  //text(sendstr.substring(72,144),0,660);
+  // text(sendstr.substring(144),0,680);
+  textSize(50);
+  text("read String:",0,1150);
+  textSize(20);
   String[] t2 = read_recv.split(" ");
   String t1 = "";
   for(int i = 0;i<t2.length;i++){
     if(t2[i].length()>=2)
   t1+=(char)(Integer.parseInt(t2[i],16));}
-  text(t1+"?",320,1210);
+  text(t1,20,1210);
+  //text(t1.substring(72),20,1230);
+  //text(t1.substring(144),20,1250);
+  textSize(50);
   saveStrings("/sdcard/test.txt",sendstr.split(""));
+  saveStrings("/sdcard/test1.txt",read_recv.split(""));
   new_time= millis();
   if((new_time-old_time)>1000){
   if(s1!=old_s){
